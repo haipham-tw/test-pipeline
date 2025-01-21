@@ -18,7 +18,7 @@ jobs:
       - name: linter
         run: |
           npm install
-          npm lint
+          npm run lint
   run-test-client:
     runs-on: ubuntu-latest
     defaults:
