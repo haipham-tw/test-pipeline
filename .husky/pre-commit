@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+# shellcheck disable=SC3045
+printf "---- pre-commit ----"
+
+pushd client
+npm run lint
+popd

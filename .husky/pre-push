@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+printf " ---- pre-push ----"
+pushd  client
+npm run test
+popd
