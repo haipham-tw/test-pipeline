@@ -1,0 +1,36 @@
+name: test
+
+on:
+  workflow_call:
+
+jobs:
+  lint-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: linter
+        run: |
+          npm install
+          npm lint
+  run-test-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: 'run test for client'
+        run: |
+          npm install
+          npm run test:ci
