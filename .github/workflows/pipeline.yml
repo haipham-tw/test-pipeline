@@ -7,3 +7,36 @@ jobs:
   run-client-test:
     uses: ./.github/workflows/test.yml
 
+  deploy-to-s3:
+    runs-on: ubuntu-latest
+    needs: [run-client-test]
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: install dependency
+        run: npm install
+
+      - name: build app
+        run: npm run build
+
+      - name: upload to s3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read
+        env:
+          SOURCE_DIR: build/
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+
+
+
+

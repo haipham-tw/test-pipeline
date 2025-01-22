@@ -12,6 +12,7 @@ const App = (): JSX.Element => {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/about" element={<About/>}/>
             </Routes>
+            <p>Changed!</p>
         </Container>
     </>
 };
