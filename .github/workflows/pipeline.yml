@@ -27,12 +27,19 @@ jobs:
       - name: build app
         run: npm run build
 
+      - name: Debug build directory
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "Listing contents of build folder:"
+          ls -la build
+
       - name: upload to s3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read
         env:
-          SOURCE_DIR: /build
+          SOURCE_DIR: build
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
